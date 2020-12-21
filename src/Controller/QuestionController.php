@@ -4,10 +4,11 @@
 namespace App\Controller;
 
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class QuestionController
+class QuestionController extends AbstractController
 {
     /**
      * @Route("/rrr")
@@ -24,6 +25,9 @@ class QuestionController
     {
         $content = "To do...." . $vraag;
 
-        return new Response($content);
+        return $this->render('question/show.html.twig', [
+           'text' => $content,
+        ]);
+
     }
 }
