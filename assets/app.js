@@ -8,5 +8,19 @@
 // any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.css';
 
+
 // start the Stimulus application
 import './bootstrap';
+
+var $container = $('.js-vote-arrows');
+$container.find('a').on('click', function(e) {
+    e.preventDefault();
+    var $link = $(e.currentTarget);
+
+    $.ajax({
+        url: '/comments/10/vote/' + $link.data('direction'),
+        method: 'POST'
+    }).then(function(response) {
+        $container.find('.js-vote-total').text(response.votes);
+    });
+});
