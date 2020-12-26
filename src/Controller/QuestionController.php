@@ -11,22 +11,28 @@ use Symfony\Component\Routing\Annotation\Route;
 class QuestionController extends AbstractController
 {
     /**
-     * @Route("/rrr")
+     * @Route("/rrr", name="krrrrra")
      */
     public function homepage()
     {
-        return new Response('Hi there');
+        return $this->render('homepage.html.twig');
     }
 
     /**
-     * @Route("/vragen/{vraag}")
+     * @Route("/vragen/{vraag}", name="brende")
      */
     public function show($vraag)
     {
         $content = "To do...." . $vraag;
+        $antwoorden = [
+          'kijuhygtf',
+          'jhgfdxcfh',
+          'jihugyfdszdxcfgvh',
+        ];
 
         return $this->render('question/show.html.twig', [
            'text' => $content,
+           'answers' => $antwoorden,
         ]);
 
     }
