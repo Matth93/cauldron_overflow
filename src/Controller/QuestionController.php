@@ -36,8 +36,6 @@ class QuestionController extends AbstractController
 
         $parsedQuestionText = $markdownHelper->parse($questionText);
 
-        dump($this->getParameter('cache_adapter'));
-
         return $this->render('question/show.html.twig', [
             'answers' => $antwoorden,
             'questionText' => $parsedQuestionText,
