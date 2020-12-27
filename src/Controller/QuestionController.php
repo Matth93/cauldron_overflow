@@ -4,9 +4,11 @@
 namespace App\Controller;
 
 
+use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Cache\CacheInterface;
 
 class QuestionController extends AbstractController
 {
@@ -21,18 +23,24 @@ class QuestionController extends AbstractController
     /**
      * @Route("/vragen/{vraag}", name="brende")
      */
-    public function show($vraag)
+    public function show($vraag, MarkdownParserInterface $markdownParser, CacheInterface $cache)
     {
-        $content = "To do...." . $vraag;
         $antwoorden = [
-          'kijuhygtf',
+          '`kijuhygtf`',
           'jhgfdxcfh',
           'jihugyfdszdxcfgvh',
         ];
+        $content = "To do...." . $vraag;
+        $questionText = "I've been turned into a crat, any thoughts on how to turn back? While I'm **adorable**, I don't really care for cat food.";
+
+        $parsedQuestionText = $cache->get('markdown_'.md5($questionText), function() use ($questionText, $markdownParser) {
+            return $markdownParser->transformMarkdown($questionText);
+        });
 
         return $this->render('question/show.html.twig', [
-           'text' => $content,
-           'answers' => $antwoorden,
+            'answers' => $antwoorden,
+            'questionText' => $parsedQuestionText,
+            'text' => $content,
         ]);
 
     }
