@@ -7,10 +7,12 @@ namespace App\Controller;
 use App\Entity\Question;
 use App\Repository\QuestionRepository;
 use App\Service\MarkdownHelper;
+use ContainerAUJRyuH\getConsole_ErrorListenerService;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Cache\CacheInterface;
@@ -74,5 +76,21 @@ class QuestionController extends AbstractController
             'question' => $question,
         ]);
 
+    }
+
+    /**
+     * @Route("/questions/{slug}/vote", name="app_question_vote", methods="POST")
+     */
+    public function questionVote(Question $question, Request $request)
+    {
+        $direction = $request->request->get('direction');
+
+        if ($direction === 'up') {
+            $question->setVotes($question->getVotes() + 1);
+        } elseif ($direction === 'down'){
+            $question->setVotes($question->getVotes() - 1);
+        }
+
+        dd($question);
     }
 }
