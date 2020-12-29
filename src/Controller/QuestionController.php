@@ -5,6 +5,7 @@ namespace App\Controller;
 
 
 use App\Entity\Question;
+use App\Repository\QuestionRepository;
 use App\Service\MarkdownHelper;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,10 +20,9 @@ class QuestionController extends AbstractController
     /**
      * @Route("/rrr", name="krrrrra")
      */
-    public function homepage(EntityManagerInterface $entityManager)
+    public function homepage(QuestionRepository $repository)
     {
-        $repository = $entityManager->getRepository(Question::class);
-        $questions = $repository->findAll();
+        $questions = $repository->findAllAskedOrderedByNewest();
 
         return $this->render('homepage.html.twig', ['questions' => $questions]);
     }
@@ -46,16 +46,15 @@ class QuestionController extends AbstractController
 
         return new Response(sprintf('Nieuwe vraag aangemaakt, met id #%d, slug %s',
             $question->getId(),
-            $question->getSlug(),
+            $question->getSlug()
         ));
     }
 
     /**
      * @Route("/vragen/{vraag}", name="brende")
      */
-    public function show($vraag, MarkdownHelper $markdownHelper, EntityManagerInterface $entityManager)
+    public function show($vraag, MarkdownHelper $markdownHelper, QuestionRepository $repository)
     {
-        $repository = $entityManager->getRepository(Question::class);
         $question = $repository->findOneBy(['slug' => $vraag]);
         if (!$question)
         {
