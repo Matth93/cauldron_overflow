@@ -34,24 +34,24 @@ class QuestionController extends AbstractController
      */
     public function new(EntityManagerInterface $entityManager)
     {
-        $question = new Question();
-        $question->setName('Test')
-            ->setSlug('test-'.rand(0,100))
-            ->setQuestion('Wave impatiently like a proud plank. Tunas whine with fortune! Grace is a cloudy cannon. All ships haul scurvy, shiny golds. The tuna blows with adventure, fire the bikini atoll before it travels!');
-
-        if (rand(1,10) > 2) {
-            $question->setAskedAt(new \DateTime(sprintf('-%d days', rand(1,100))));
-        }
-
-        $question->setVotes(rand(-200, 5));
-
-        $entityManager->persist($question);
-        $entityManager->flush();
-
-        return new Response(sprintf('Nieuwe vraag aangemaakt, met id #%d, slug %s',
-            $question->getId(),
-            $question->getSlug()
-        ));
+//        $question = new Question();
+//        $question->setName('Test')
+//            ->setSlug('test-'.rand(0,100))
+//            ->setQuestion('Wave impatiently like a proud plank. Tunas whine with fortune! Grace is a cloudy cannon. All ships haul scurvy, shiny golds. The tuna blows with adventure, fire the bikini atoll before it travels!');
+//
+//        if (rand(1,10) > 2) {
+//            $question->setAskedAt(new \DateTime(sprintf('-%d days', rand(1,100))));
+//        }
+//
+//        $question->setVotes(rand(-200, 5));
+//
+//        $entityManager->persist($question);
+//        $entityManager->flush();
+//
+//        return new Response(sprintf('Nieuwe vraag aangemaakt, met id #%d, slug %s',
+//            $question->getId(),
+//            $question->getSlug()
+//        ));
     }
 
     /**
