@@ -33,7 +33,8 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.4",
-        "symfony/maker-bundle": "^1.26"
+        "symfony/maker-bundle": "^1.26",
+        "zenstruck/foundry": "^1.6"
     },
     "config": {
         "optimize-autoloader": true,
