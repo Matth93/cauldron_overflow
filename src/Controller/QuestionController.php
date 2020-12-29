@@ -4,7 +4,10 @@
 namespace App\Controller;
 
 
+use App\Entity\Question;
 use App\Service\MarkdownHelper;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Bundle\MarkdownBundle\MarkdownParserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,30 +19,58 @@ class QuestionController extends AbstractController
     /**
      * @Route("/rrr", name="krrrrra")
      */
-    public function homepage()
+    public function homepage(EntityManagerInterface $entityManager)
     {
-        return $this->render('homepage.html.twig');
+        $repository = $entityManager->getRepository(Question::class);
+        $questions = $repository->findAll();
+
+        return $this->render('homepage.html.twig', ['questions' => $questions]);
+    }
+
+    /**
+     * @Route("/vragen/new")
+     */
+    public function new(EntityManagerInterface $entityManager)
+    {
+        $question = new Question();
+        $question->setName('Test')
+            ->setSlug('test-'.rand(0,100))
+            ->setQuestion('Wave impatiently like a proud plank. Tunas whine with fortune! Grace is a cloudy cannon. All ships haul scurvy, shiny golds. The tuna blows with adventure, fire the bikini atoll before it travels!');
+
+        if (rand(1,10) > 2) {
+            $question->setAskedAt(new \DateTime(sprintf('-%d days', rand(1,100))));
+        }
+
+        $entityManager->persist($question);
+        $entityManager->flush();
+
+        return new Response(sprintf('Nieuwe vraag aangemaakt, met id #%d, slug %s',
+            $question->getId(),
+            $question->getSlug(),
+        ));
     }
 
     /**
      * @Route("/vragen/{vraag}", name="brende")
      */
-    public function show($vraag, MarkdownHelper $markdownHelper)
+    public function show($vraag, MarkdownHelper $markdownHelper, EntityManagerInterface $entityManager)
     {
+        $repository = $entityManager->getRepository(Question::class);
+        $question = $repository->findOneBy(['slug' => $vraag]);
+        if (!$question)
+        {
+            throw $this->createNotFoundException('Vraag niet gevonden');
+        }
+
         $antwoorden = [
           '`kijuhygtf`',
           'jhgfd**`xcfh`**',
           'jihugyfdszdxcfgvh',
         ];
-        $content = "To do...." . $vraag;
-        $questionText = "I've been turned into a crat, any thoughts on how to turn back? While I'm **adorable**, I don't really care for cat food.";
-
-        $parsedQuestionText = $markdownHelper->parse($questionText);
 
         return $this->render('question/show.html.twig', [
             'answers' => $antwoorden,
-            'questionText' => $parsedQuestionText,
-            'text' => $content,
+            'question' => $question,
         ]);
 
     }
