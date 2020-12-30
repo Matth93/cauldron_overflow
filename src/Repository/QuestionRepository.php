@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Question;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -28,8 +29,14 @@ class QuestionRepository extends ServiceEntityRepository
             ->andWhere('q.askedAt IS NOT NULL')
             ->orderBy('q.askedAt', 'DESC')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
+    }
+
+    public static function createNonDeletedCriteria(): Criteria
+    {
+        return Criteria::create()
+            ->andWhere(Criteria::expr()->eq('isDeleted', false))
+            ->orderBy(['createdAt' => 'DESC']);
     }
 
     /*

@@ -31,6 +31,7 @@ final class CommentFactory extends ModelFactory
         return [
             'authorName' => self::faker()->name,
             'content' => self::faker()->paragraphs(rand(1,2), true),
+            'isDeleted' => self::faker()->boolean(20),
         ];
     }
 
