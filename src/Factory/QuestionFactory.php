@@ -2,8 +2,10 @@
 
 namespace App\Factory;
 
+use App\Entity\Comment;
 use App\Entity\Question;
 use App\Repository\QuestionRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 use Zenstruck\Foundry\RepositoryProxy;
 use Zenstruck\Foundry\ModelFactory;
@@ -46,11 +48,8 @@ final class QuestionFactory extends ModelFactory
     {
         // see https://github.com/zenstruck/foundry#initialization
         return $this
-//             ->afterInstantiate(function(Question $question) {
-//                 if (!$question->getSlug()){
-//                     $slugger = new AsciiSlugger();
-//                     $question->setSlug($slugger->slug($question->getName()));
-//                 }
+//             ->afterInstantiate(function(Question $question, EntityManagerInterface $entityManager) {
+//
 //             })
         ;
     }
