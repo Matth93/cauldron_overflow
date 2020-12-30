@@ -29,7 +29,7 @@ final class CommentFactory extends ModelFactory
     protected function getDefaults(): array
     {
         return [
-            'authorName' => 'Mikeyyyy',
+            'authorName' => self::faker()->name,
             'content' => self::faker()->paragraphs(rand(1,2), true),
         ];
     }
