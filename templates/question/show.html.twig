@@ -43,22 +43,22 @@
         </div>
 
         <div class="d-flex justify-content-between my-4">
-            <h2 class="">Answers <span style="font-size:1.2rem;">({{ answers|length }})</span></h2>
+            <h2 class="">Answers <span style="font-size:1.2rem;">({{ question.comments|length }})</span></h2>
             <button class="btn btn-sm btn-secondary">Submit an Answer</button>
         </div>
 
 
 
         <ul class="list-unstyled">
-            {% for answer in answers %}
+            {% for comment in question.comments %}
                 <li class="mb-4">
                     <div class="d-flex justify-content-center">
                         <div class="mr-2 pt-2">
                             <img src="/images/tisha.png" width="50" height="50">
                         </div>
                         <div class="mr-3 pt-2">
-                            {{ answer|krondel}}
-                            <p>-- Mallory</p>
+                            {{ comment.content|krondel}}
+                            <p>-- {{ comment.authorName }}</p>
                         </div>
                         <div class="vote-arrows flex-fill pt-2 js-vote-arrows" style="min-width: 90px;">
                             <a class="vote-up" href="#" data-direction="up"><i class="far fa-arrow-alt-circle-up"></i></a>

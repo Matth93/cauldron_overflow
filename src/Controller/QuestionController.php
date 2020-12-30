@@ -65,14 +65,7 @@ class QuestionController extends AbstractController
             throw $this->createNotFoundException('Vraag niet gevonden');
         }
 
-        $antwoorden = [
-          '`kijuhygtf`',
-          'jhgfd**`xcfh`**',
-          'jihugyfdszdxcfgvh',
-        ];
-
         return $this->render('question/show.html.twig', [
-            'answers' => $antwoorden,
             'question' => $question,
         ]);
 

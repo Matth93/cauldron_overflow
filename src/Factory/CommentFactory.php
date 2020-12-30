@@ -30,7 +30,7 @@ final class CommentFactory extends ModelFactory
     {
         return [
             'authorName' => 'Mikeyyyy',
-            'content' => 'Not earth or special places, handle the attitude.'
+            'content' => self::faker()->paragraphs(rand(1,2), true),
         ];
     }
 
