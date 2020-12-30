@@ -11,6 +11,7 @@
                    name="q"
                    class="form-control"
                    placeholder="Search..."
+                   value="{{ app.request.query.get('q') }}"
             >
             <div class="input-group-append">
                 <button type="submit"
