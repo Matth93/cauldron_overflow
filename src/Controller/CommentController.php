@@ -4,9 +4,10 @@
 namespace App\Controller;
 
 
+use App\Form\CommentFormType;
+use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CommentController extends AbstractController
@@ -26,5 +27,17 @@ class CommentController extends AbstractController
 
         return $this->json(['votes' => $currentVoteCount]);
 
+    }
+
+    /**
+     * @Route("/comment/new", name="comment_new")
+     */
+    public function new(EntityManagerInterface $entityManager)
+    {
+        $form = $this->createForm(CommentFormType::class);
+
+        return $this->render('comment/new.html.twig', [
+           'commentForm' => $form->createView()
+        ]);
     }
 }
