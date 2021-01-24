@@ -55,6 +55,8 @@ class CommentController extends AbstractController
             $entityManager->persist($comment);
             $entityManager->flush();
 
+            $this->addFlash('success', 'lekker bezig');
+
             return $this->redirectToRoute('comment_admin');
         }
 
