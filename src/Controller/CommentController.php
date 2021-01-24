@@ -41,10 +41,9 @@ class CommentController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-            $comment = new Comment();
-            $comment->setAuthorName($data['authorName']);
-            $comment->setContent($data['content']);
+            /** @var Comment $comment */
+            $comment = $form->getData();
+
             $comment->setIsDeleted(false);
 
             $questions = $questionRepository->findAll();

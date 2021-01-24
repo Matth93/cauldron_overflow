@@ -4,8 +4,10 @@
 namespace App\Form;
 
 
+use App\Entity\Comment;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CommentFormType extends AbstractType
 {
@@ -14,6 +16,13 @@ class CommentFormType extends AbstractType
         $builder
             ->add('authorName')
             ->add('content');
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => Comment::class
+        ]);
     }
 
 }
