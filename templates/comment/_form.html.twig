@@ -1,0 +1,5 @@
+{{ form_start(commentForm) }}
+    {{ form_row(commentForm.authorName, {label: 'Naam van de Auteur'}) }}
+    {{ form_row(commentForm.content) }}
+    <button type="submit" class="btn btn-danger">{{ button_text }}</button>
+{{ form_end(commentForm) }}

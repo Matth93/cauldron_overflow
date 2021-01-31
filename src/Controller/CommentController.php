@@ -35,7 +35,7 @@ class CommentController extends AbstractController
     /**
      * @Route("/comment/new", name="comment_new")
      */
-    public function new(EntityManagerInterface $entityManager,Request $request, QuestionRepository $questionRepository)
+    public function new(EntityManagerInterface $entityManager, Request $request, QuestionRepository $questionRepository)
     {
         $form = $this->createForm(CommentFormType::class);
 
@@ -63,4 +63,30 @@ class CommentController extends AbstractController
            'commentForm' => $form->createView()
         ]);
     }
+
+    /**
+     * @Route("/comment/{id}/edit", name="comment_edit")
+     */
+    public function edit(Comment $comment, Request $request, EntityManagerInterface $entityManager, QuestionRepository $questionRepository)
+    {
+        $form = $this->createForm(CommentFormType::class, $comment);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($comment);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'lekker bezig, de comment in bijgewerkt');
+
+            return $this->redirectToRoute('comment_edit', [
+                'id' => $comment->getId()
+            ]);
+        }
+
+        return $this->render('comment/edit.html.twig', [
+            'commentForm' => $form->createView()
+        ]);
+    }
+
+
 }
