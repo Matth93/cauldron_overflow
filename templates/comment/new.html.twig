@@ -4,7 +4,8 @@
 
     <h1>New comment</h1>
     {{ form_start(commentForm) }}
-        {{ form_widget(commentForm) }}
+        {{ form_row(commentForm.authorName, {label: 'Naam van de Auteur'}) }}
+        {{ form_row(commentForm.content) }}
         <button type="submit" class="btn btn-danger">Create</button>
     {{ form_end(commentForm) }}
 
